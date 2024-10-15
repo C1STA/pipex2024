@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 18:53:35 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/15 17:40:46 by wacista          ###   ########.fr       */
+/*   Created: 2024/10/15 20:43:29 by wacista           #+#    #+#             */
+/*   Updated: 2024/10/15 20:45:23 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "pipex.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <stdbool.h>
-#include "libft.h"
-
-typedef struct s_pipex
+void	error_return(t_p *p, char *s)
 {
-	char	**paths;
-	char	**cmd_args;
-	char	*cmd_path;
-	int		fd[2];
-}	t_p;
-
-#endif
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd(": ", 2);
+	if (p->cmd_path)
+		perror("");
+	else
+	{
+		ft_putstr_fd("command not found\n", 2);
+		free_pipex(p);
+		exit(127);
+	}
+	free_pipex(p);
+	exit(EXIT_FAILURE);
+}
