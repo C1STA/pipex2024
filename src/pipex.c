@@ -6,13 +6,13 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:43:07 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/15 20:36:30 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/16 20:41:51 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*join_buffer(char *s1, char *s2)
+static char	*join_buffer(char *s1, char *s2)
 {
 	size_t		i;
 	char		*dest;
@@ -43,7 +43,8 @@ char	*join_buffer(char *s1, char *s2)
 
 static void	get_paths(t_p *p, char **env)
 {
-	char	*path_line;	
+	int		i;
+	char	*path_line;
 
 	while (*env)
 	{
@@ -53,10 +54,11 @@ static void	get_paths(t_p *p, char **env)
 	}
 	p->paths = ft_split(path_line, ':');
 	free(path_line);
-	while (*p->paths)
+	i = 0;
+	while (p->paths[i])
 	{
-		*p->paths = join_buffer(*p->paths, "/");
-		p->paths++;
+		p->paths[i] = join_buffer(p->paths[i], "/");
+		i++;
 	}
 }
 
@@ -78,14 +80,17 @@ static bool	check_raw_access(t_p *p, char *av)
 
 static void	check_access(t_p *p)
 {
-	while (*p->paths)
+	int	i;
+
+	i = 0;
+	while (p->paths[i])
 	{
-		p->cmd_path = ft_strjoin(*p->paths, *p->cmd_args);
+		p->cmd_path = ft_strjoin(p->paths[i], *p->cmd_args);
 		if (!access(p->cmd_path, F_OK | X_OK))
 			return ;
 		free(p->cmd_path);
 		p->cmd_path = NULL;
-		p->paths++;
+		i++;
 	}
 }
 

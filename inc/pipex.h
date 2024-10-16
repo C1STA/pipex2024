@@ -6,21 +6,21 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:53:35 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/15 17:40:46 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/17 00:55:27 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <stdbool.h>
-#include "libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <string.h>
+# include <sys/wait.h>
+# include <stdbool.h>
+# include "libft.h"
 
 typedef struct s_pipex
 {
@@ -29,5 +29,10 @@ typedef struct s_pipex
 	char	*cmd_path;
 	int		fd[2];
 }	t_p;
+
+void	error_return(t_p *p, char *s, bool n);
+void	get_data(t_p *p, char *av, char **env);
+void	free_tab(char **arr);
+void	free_pipex(t_p *p);
 
 #endif

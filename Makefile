@@ -12,7 +12,10 @@ LIBFT	= -L lib/libft -lft
 CFLAGS	= -Wall -Wextra -Werror -g
 
 SRCPATH	= src/
-SRC	=	main.c
+SRC	=	main.c \
+		pipex.c \
+		free.c \
+		error.c
 
 OBJDIR	= .config/obj/
 OBJ		= $(addprefix $(OBJDIR), $(SRC:.c=.o))
