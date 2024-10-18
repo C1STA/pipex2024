@@ -6,7 +6,7 @@ WHITE	=\033[0;37m
 
 CC		= cc
 RM		= rm -rf
-NAME	= pipex
+NAME	= pipex 
 INC		= -I inc/ -I lib/libft/
 LIBFT	= -L lib/libft -lft
 CFLAGS	= -Wall -Wextra -Werror -g
@@ -15,7 +15,8 @@ SRCPATH	= src/
 SRC	=	main.c \
 		pipex.c \
 		free.c \
-		error.c
+		error.c \
+		new_split.c
 
 OBJDIR	= .config/obj/
 OBJ		= $(addprefix $(OBJDIR), $(SRC:.c=.o))

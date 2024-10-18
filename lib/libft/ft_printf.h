@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 20:43:29 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/18 22:13:41 by wacista          ###   ########.fr       */
+/*   Created: 2024/06/03 16:19:21 by wacista           #+#    #+#             */
+/*   Updated: 2024/10/18 18:57:06 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-void	error_return(t_p *p, char *prog, char *cmd, bool n)
-{
-	char	*tmp;
+# include <unistd.h>
+# include <stdarg.h>
 
-	if (p->cmd_path || n)
-	{
-		tmp = ft_substr(prog, 2, ft_strlen(prog));
-		ft_printf("%s: %s: %s\n", tmp, cmd, strerror(errno));
-		if (tmp)
-			free(tmp);
-	}
-	else
-		ft_printf("%s: command not found\n", cmd);
-	free_pipex(p);
-	if (!n)
-		exit(127);
-	exit(EXIT_FAILURE);
-}
+int		ft_printf(const char *s, ...);
+int		ft_putnbr(int n);
+int		ft_putnbr_unsigned(unsigned int n);
+void	ft_putchar(unsigned char c);
+int		ft_putstr(char *s);
+int		ft_putnbr_hex(unsigned long n, char *base);
+
+#endif

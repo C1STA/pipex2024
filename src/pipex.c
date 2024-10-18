@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:43:07 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/16 20:41:51 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/18 22:17:11 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,15 @@ static void	get_paths(t_p *p, char **env)
 	int		i;
 	char	*path_line;
 
+	path_line = NULL;
 	while (*env)
 	{
 		if (ft_strnstr(*env, "PATH=", 5))
 			path_line = ft_substr(*env, 5, ft_strlen(*env));
 		env++;
 	}
+	if (!path_line)
+		return ;
 	p->paths = ft_split(path_line, ':');
 	free(path_line);
 	i = 0;
@@ -66,11 +69,11 @@ static bool	check_raw_access(t_p *p, char *av)
 {
 	char	**cmd;
 
-	cmd = ft_split(av, ' ');
+	cmd = new_split(av);
 	if (!access(*cmd, F_OK | X_OK))
 	{
 		p->cmd_path = ft_strdup(*cmd);
-		p->cmd_args = ft_split(av, ' ');
+		p->cmd_args = new_split(av);
 		free_tab(cmd);
 		return (true);
 	}
@@ -83,6 +86,8 @@ static void	check_access(t_p *p)
 	int	i;
 
 	i = 0;
+	if (!p->paths)
+		return ;
 	while (p->paths[i])
 	{
 		p->cmd_path = ft_strjoin(p->paths[i], *p->cmd_args);
@@ -99,7 +104,7 @@ void	get_data(t_p *p, char *av, char **env)
 	if (!check_raw_access(p, av))
 	{
 		get_paths(p, env);
-		p->cmd_args = ft_split(av, ' ');
+		p->cmd_args = new_split(av);
 		check_access(p);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:40:33 by wacista           #+#    #+#             */
-/*   Updated: 2024/05/31 00:43:21 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/18 23:00:30 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stddef.h>
 # include <stdint.h>
+# include "ft_printf.h"
 
 typedef struct s_list
 {
