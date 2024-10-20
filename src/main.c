@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:25:47 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/20 03:03:25 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/20 03:33:00 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ int	main(int ac, char **av, char **env)
 	int	status;
 
 	if (ac != 5)
-		return (ft_putstr_fd("pipex: four arguments required\n", 2), 1);
+		return (ft_printf("pipex: four arguments required\n"), 2);
 	p = (t_p *)malloc(sizeof(t_p));
 	if (!p)
-		return (ft_putstr_fd("pipex: fatal error: malloc fail\n", 2), 1);
+		return (ft_printf("pipex: %s\n", strerror(errno)), 1);
 	init_struct(p);
 	status = pipex(p, av, env);
 	free_pipex(p);
