@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:25:47 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/20 03:33:00 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/20 03:48:49 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,8 @@ static void	child_one(t_p *p, char **av, char **env)
 	int	infile;
 
 	close (p->fd[0]);
-	if (!access(av[1], R_OK))
-	{
-		infile = open(av[1], O_RDONLY);
-		if (infile == -1)
-			return (close(p->fd[1]), error_return (p, av[0], av[1], 1));
-	}
-	else
+	infile = open(av[1], O_RDONLY);
+	if (infile == -1)
 		return (close(p->fd[1]), error_return (p, av[0], av[1], 1));
 	dup2(infile, STDIN_FILENO);
 	dup2(p->fd[1], STDOUT_FILENO);
@@ -44,8 +39,8 @@ static void	child_two(t_p *p, char **av, char **env)
 	outfile = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (outfile == -1)
 		return (close(p->fd[0]), error_return(p, av[0], av[4], 1));
-	dup2(p->fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
+	dup2(p->fd[0], STDIN_FILENO);
 	close(p->fd[0]);
 	close(outfile);
 	get_data(p, av[3], env);
