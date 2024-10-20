@@ -16,7 +16,7 @@ SRC	=	main.c \
 		pipex.c \
 		free.c \
 		error.c \
-		new_split.c
+		ft_split_args.c
 
 OBJDIR	= .config/obj/
 OBJ		= $(addprefix $(OBJDIR), $(SRC:.c=.o))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_split.c                                        :+:      :+:    :+:   */
+/*   ft_split_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:42:48 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/18 22:56:29 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/20 02:54:20 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,58 +27,46 @@ static void	ft_free(char **dest, int k)
 	dest = NULL;
 }
 
-static char	*ft_strncpy(char *dest, char const *src, int size)
+static char	*alloc_word(char const **s, char quote)
 {
-	int	i;
+	char		*word;
+	char const	*start;
 
-	i = 0;
-	while (src[i] && i < size)
+	start = *s;
+	while (**s && (quote || (**s != ' ' && **s != '\'' && **s != '"')))
 	{
-		dest[i] = src[i];
-		i++;
+		if (**s == quote)
+			break ;
+		(*s)++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	word = (char *)malloc(*s - start + 1);
+	if (!word)
+		return (NULL);
+	ft_strncpy(word, start, (*s - start));
+	if (quote && **s == quote)
+		(*s)++;
+	return (word);
 }
 
 static char	**fill_words(char **dest, char const *s)
 {
 	int		i;
-	char	*start;
 	char	quote;
 
 	i = 0;
 	while (*s)
 	{
+		quote = 0;
 		while (*s && ((*s >= 9 && *s <= 13) || *s == 32))
 			s++;
 		if (!*s)
 			break ;
-		start = (char *)s;
-		quote = 0;
 		if (*s == '\'' || *s == '"')
-		{
 			quote = *s++;
-			start++;
-			while (*s && *s != quote)
-				s++;
-			if (*s)
-				s++;
-		}
-		else
-		{
-			while (*s && (*s != ' ' && *s != '\'' && *s != '"'))
-				s++;
-		}
-		if (s > start)
-		{
-			dest[i] = (char *)malloc(sizeof(char) * (s - start + 1));
-			if (!dest[i])
-				return (ft_free(dest, i), NULL);
-			if (quote)
-				quote = 1;
-			ft_strncpy(dest[i++], start, s - start - quote);
-		}
+		dest[i] = alloc_word(&s, quote);
+		if (!dest[i])
+			return (ft_free(dest, i), NULL);
+		i++;
 	}
 	dest[i] = NULL;
 	return (dest);
@@ -113,7 +101,7 @@ static int	count_words(char const *s)
 	return (words);
 }
 
-char	**new_split(char const *s)
+char	**ft_split_args(char const *s)
 {
 	char	**dest;
 

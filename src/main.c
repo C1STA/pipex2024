@@ -6,13 +6,13 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:25:47 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/18 22:35:07 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/20 03:03:25 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child_one(t_p *p, char **av, char **env)
+static void	child_one(t_p *p, char **av, char **env)
 {
 	int	infile;
 
@@ -31,12 +31,12 @@ void	child_one(t_p *p, char **av, char **env)
 	close(infile);
 	get_data(p, av[2], env);
 	if (!p->cmd_path)
-		error_return(p, NULL, *p->cmd_args, 0);
+		error_return(p, av[0], *p->cmd_args, 0);
 	if (execve(p->cmd_path, p->cmd_args, env) == -1)
-		error_return(p, NULL, *p->cmd_args, 0);
+		error_return(p, av[0], *p->cmd_args, 0);
 }
 
-void	child_two(t_p *p, char **av, char **env)
+static void	child_two(t_p *p, char **av, char **env)
 {
 	int	outfile;
 
@@ -50,12 +50,12 @@ void	child_two(t_p *p, char **av, char **env)
 	close(outfile);
 	get_data(p, av[3], env);
 	if (!p->cmd_path)
-		error_return(p, NULL, *p->cmd_args, 0);
+		error_return(p, av[0], *p->cmd_args, 0);
 	if (execve(p->cmd_path, p->cmd_args, env) == -1)
-		error_return(p, NULL, *p->cmd_args, 0);
+		error_return(p, av[0], *p->cmd_args, 0);
 }
 
-int	pipex(t_p *p, char **av, char **env)
+static int	pipex(t_p *p, char **av, char **env)
 {
 	int		status;
 	pid_t	child1;
@@ -82,7 +82,7 @@ int	pipex(t_p *p, char **av, char **env)
 	return (0);
 }
 
-void	init_struct(t_p *p)
+static void	init_struct(t_p *p)
 {
 	p->paths = NULL;
 	p->cmd_args = NULL;

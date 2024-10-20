@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:42:48 by wacista           #+#    #+#             */
-/*   Updated: 2024/05/30 21:38:42 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/19 21:16:44 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ static void	ft_free(char **dest, int k)
 	}
 	free(dest);
 	dest = NULL;
-}
-
-static char	*ft_strncpy(char *dest, char const *src, int size)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] && i < size)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }
 
 static char	**fill_words(char **dest, char const *s, char c)

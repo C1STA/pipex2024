@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:43:07 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/18 22:17:11 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/20 03:10:59 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ static bool	check_raw_access(t_p *p, char *av)
 {
 	char	**cmd;
 
-	cmd = new_split(av);
+	cmd = ft_split_args(av);
 	if (!access(*cmd, F_OK | X_OK))
 	{
 		p->cmd_path = ft_strdup(*cmd);
-		p->cmd_args = new_split(av);
+		p->cmd_args = ft_split_args(av);
 		free_tab(cmd);
 		return (true);
 	}
@@ -104,7 +104,7 @@ void	get_data(t_p *p, char *av, char **env)
 	if (!check_raw_access(p, av))
 	{
 		get_paths(p, env);
-		p->cmd_args = new_split(av);
+		p->cmd_args = ft_split_args(av);
 		check_access(p);
 	}
 }
