@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 13:43:52 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/21 07:32:13 by wacista          ###   ########.fr       */
+/*   Created: 2024/10/15 20:43:29 by wacista           #+#    #+#             */
+/*   Updated: 2024/10/18 22:13:41 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-size_t	ft_strlen(const char *s)
+void	error_return(t_p *p, char *prog, char *cmd, bool n)
 {
-	unsigned int	i;
+	char	*tmp;
 
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (p->cmd_path || n)
+	{
+		tmp = ft_substr(prog, 2, ft_strlen(prog));
+		ft_printf("%s: %s: %s\n", tmp, cmd, strerror(errno));
+		if (tmp)
+			free(tmp);
+	}
+	else
+		ft_printf("%s: command not found\n", cmd);
+	free_pipex(p);
+	if (!n)
+		exit(127);
+	exit(EXIT_FAILURE);
 }

@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 13:43:52 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/21 07:32:13 by wacista          ###   ########.fr       */
+/*   Created: 2024/06/06 10:36:37 by wacista           #+#    #+#             */
+/*   Updated: 2024/10/21 07:29:03 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-size_t	ft_strlen(const char *s)
-{
-	unsigned int	i;
+# include <stdlib.h>
+# include <unistd.h>
+# include <stddef.h>
+# include "libft.h"
 
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
+
+char	*get_next_line(int fd);
+char	*join_buffer(char *s1, char *s2);
+int		is_newline(char *s);
+char	*cpy_newline(char *s);
+char	*new_buffer(char *s);
+void	free_buffer(char *buffer);
+
+#endif

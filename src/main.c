@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:25:47 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/20 03:48:49 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/21 02:42:05 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	child_one(t_p *p, char **av, char **env)
 	close (p->fd[0]);
 	infile = open(av[1], O_RDONLY);
 	if (infile == -1)
-		return (close(p->fd[1]), error_return (p, av[0], av[1], 1));
+		return (close(p->fd[1]), error_return(p, av[0], av[1], 1));
 	dup2(infile, STDIN_FILENO);
 	dup2(p->fd[1], STDOUT_FILENO);
 	close(p->fd[1]);

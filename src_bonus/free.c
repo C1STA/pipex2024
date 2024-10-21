@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 13:43:52 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/21 07:32:13 by wacista          ###   ########.fr       */
+/*   Created: 2024/10/15 14:25:52 by wacista           #+#    #+#             */
+/*   Updated: 2024/10/15 14:28:59 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-size_t	ft_strlen(const char *s)
+void	free_tab(char **arr)
 {
-	unsigned int	i;
+	int	i;
 
-	if (!s)
-		return (0);
 	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (!arr)
+		return ;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
+
+void	free_pipex(t_p *p)
+{
+	free_tab(p->paths);
+	free_tab(p->cmd_args);
+	if (p->cmd_path)
+		free(p->cmd_path);
+	if (p)
+		free(p);
 }
