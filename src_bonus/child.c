@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 06:15:59 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/26 10:30:00 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 16:14:34 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,15 @@ int	wait_childs(t_p *p)
 	return (status);
 }
 
-void	child_process(t_p *p, int ac, char **av, char **env)
+void	in_child(t_p *p, char **av)
 {
 	int	infile;
-	int	outfile;
 
-	printf("je suis: %d: %d\n", p->i, getpid());
-	close_unused_pipes(p);
 	if (p->i != 0)
+	{
 		dup2(p->fd[p->i - 1][0], STDIN_FILENO);
-		//close(p->fd[p->i - 1][0]);
+		close(p->fd[p->i - 1][0]);
+	}
 	else
 	{
 		if (p->isheredoc == 1)
@@ -63,11 +62,20 @@ void	child_process(t_p *p, int ac, char **av, char **env)
 			error_child(p, av[0], av[1], 1);
 		dup2(infile, STDIN_FILENO);
 		close(infile);
-		//close(p->fd[p->i][0]);
+		if (p->isheredoc && unlink("/tmp/.pipex_heredoc") == -1)
+			error_child(p, av[0], av[p->i + p->start], 1);
 	}
+}
+
+void	out_child(t_p *p, int ac, char **av)
+{
+	int	outfile;
+
 	if (p->i != p->nb_cmds - 1)
+	{
 		dup2(p->fd[p->i][1], STDOUT_FILENO);
-		//close(p->fd[p->i][1]);
+		close(p->fd[p->i][1]);
+	}
 	else
 	{
 		if (p->isheredoc == 1)
@@ -79,6 +87,13 @@ void	child_process(t_p *p, int ac, char **av, char **env)
 		dup2(outfile, STDOUT_FILENO);
 		close(outfile);
 	}
+}
+
+void	child_process(t_p *p, int ac, char **av, char **env)
+{
+	close_unused_pipes(p);
+	in_child(p, av);
+	out_child(p, ac, av);
 	if (!isprintable(av[p->i + p->start]))
 		return (error_child(p, av[0], av[p->i + p->start], 0));
 	get_data(p, av[p->i + p->start], env);

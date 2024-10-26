@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:43:29 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/25 06:26:58 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 16:15:50 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,6 @@ void	error_child(t_p *p, char *prog, char *cmd, int n)
 	prog = ft_substr(prog, 2, ft_strlen(prog));
 	if (!prog)
 		prog = "pipex";
-	if (p->i != p->nb_cmds - 1)
-	{
-		close(p->fd[p->i][1]);
-		close(STDOUT_FILENO);
-	}
-	if (p->i != 0)
-	{
-		//close(p->fd[p->i - 1][0]);
-		close(STDIN_FILENO);
-	}
 	if (p->cmd_path || n)
 		ft_printf("%s: %s: %s\n", prog, cmd, strerror(errno));
 	else

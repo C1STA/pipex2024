@@ -17,7 +17,6 @@ SRC	=	main.c \
 		free.c \
 		error.c \
 		ft_split_args.c \
-		lonely.c \
 		child.c \
 		data.c \
 		fork.c \

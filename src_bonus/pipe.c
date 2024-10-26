@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 06:17:24 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/26 11:15:19 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 16:21:39 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ static void	init_struct(t_p *p)
 	p->i = 0;
 }
 
+void	close_unused_pipes(t_p *p)
+{
+	int	j;
+
+	j = 0;
+	while (j < p->nb_cmds - 1)
+	{
+		if (j != p->i)
+			close(p->fd[j][1]);
+		if (j + 1 != p->i)
+			close(p->fd[j][0]);
+		j++;
+	}
+}
+
 void	close_pipes_main(t_p *p)
 {
 	int	i;
@@ -35,44 +50,6 @@ void	close_pipes_main(t_p *p)
 		close(p->fd[i][0]);
 		close(p->fd[i][1]);
 		i++;
-	}
-}
-
-void	close_unused_pipes(t_p *p)
-{
-	int	j;
-
-	j = 0;
-	if (p->i == 0)
-	{
-		//close(p->fd[p->i][0]);
-		j++;
-		while (j < p->nb_cmds - 1)
-		{
-			close(p->fd[j][1]);
-			close(p->fd[j][0]);
-			j++;
-		}
-	}
-	else if (p->i == p->nb_cmds - 1)
-	{
-		while (j < p->nb_cmds - 2)
-		{
-			close(p->fd[j][1]);
-			close(p->fd[j++][0]);
-		}
-		close(p->fd[j][1]);
-	}
-	else
-	{
-		while (j < p->nb_cmds - 1)
-		{
-			if (p->i != j)
-				close(p->fd[j][1]);
-			if (p->i - 1 != j)
-				close(p->fd[j][0]);
-			j++;
-		}
 	}
 }
 
@@ -98,20 +75,4 @@ bool	init_pipes(t_p *p, int ac, char **av)
 		i++;
 	}
 	return (0);
-}
-
-
-void	close_unused_pipes(t_p *p)
-{
-	int	j;
-
-	j = 0;
-	while (j < p->nb_cmds - 1)
-	{
-		if (j != p->i)
-			close(p->fd[j][1]);
-		if (j != 0 && j != p->i)
-			close(p->fd[j - 1][0]);
-		j++;
-	}
 }
