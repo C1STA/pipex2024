@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 06:17:24 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/25 06:22:22 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 11:15:19 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,20 @@ bool	init_pipes(t_p *p, int ac, char **av)
 		i++;
 	}
 	return (0);
+}
+
+
+void	close_unused_pipes(t_p *p)
+{
+	int	j;
+
+	j = 0;
+	while (j < p->nb_cmds - 1)
+	{
+		if (j != p->i)
+			close(p->fd[j][1]);
+		if (j != 0 && j != p->i)
+			close(p->fd[j - 1][0]);
+		j++;
+	}
 }
