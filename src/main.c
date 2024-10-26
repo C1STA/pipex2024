@@ -6,11 +6,11 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:25:47 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/21 02:42:05 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 17:49:13 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_basic.h"
 
 static void	child_one(t_p *p, char **av, char **env)
 {
@@ -90,7 +90,7 @@ int	main(int ac, char **av, char **env)
 	int	status;
 
 	if (ac != 5)
-		return (ft_printf("pipex: four arguments required\n"), 2);
+		return (ft_printf("pipex: accepts 4 args, received %d\n", ac - 1), 2);
 	p = (t_p *)malloc(sizeof(t_p));
 	if (!p)
 		return (ft_printf("pipex: %s\n", strerror(errno)), 1);

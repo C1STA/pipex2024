@@ -6,11 +6,11 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:42:48 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/20 02:54:20 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 17:47:50 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_basic.h"
 
 static void	ft_free(char **dest, int k)
 {

@@ -6,11 +6,11 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:43:29 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/18 22:13:41 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 17:47:37 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_basic.h"
 
 void	error_return(t_p *p, char *prog, char *cmd, bool n)
 {

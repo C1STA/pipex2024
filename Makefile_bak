@@ -21,11 +21,14 @@ SRC	=	main.c \
 
 SRC_BONUS_PATH = src_bonus/
 SRC_BONUS = main.c \
-						pipex.c \
-						error.c \
+						pipe.c \
 						free.c \
+						error.c \
 						ft_split_args.c \
-						lonely.c
+						child.c \
+						data.c \
+						fork.c \
+						heredoc.c
 
 all: $(NAME)
 

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_basic.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:53:35 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/26 17:45:40 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 17:51:11 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BASIC_H
+# define PIPEX_BASIC_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -23,23 +23,18 @@
 # include <errno.h>
 # include "libft.h"
 
-typedef struct s_pipex
+typedef struct s_pipe
 {
 	char	**paths;
 	char	**cmd_args;
 	char	*cmd_path;
-	int		**fd;
-	pid_t	*child;
-	bool	isheredoc;
-	int		start;
-	int		nb_cmds;
-	int		i;
+	int		fd[2];
 }	t_p;
 
 void	error_return(t_p *p, char *prog, char *cmd, bool n);
 void	get_data(t_p *p, char *av, char **env);
 void	free_tab(char **arr);
-void	free_pipe(t_p *p);
+void	free_pipex(t_p *p);
 char	**ft_split_args(char const *s);
 
 int		wait_childs(t_p *p);

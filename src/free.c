@@ -6,11 +6,11 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:25:52 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/24 15:40:29 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 17:47:43 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_basic.h"
 
 void	free_tab(char **arr)
 {

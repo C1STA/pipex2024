@@ -6,40 +6,11 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:43:07 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/20 03:10:59 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/26 17:48:32 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-static char	*join_buffer(char *s1, char *s2)
-{
-	size_t		i;
-	char		*dest;
-
-	if (!s2)
-		return (s1);
-	dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!dest)
-	{
-		if (s1)
-			free(s1);
-		return (NULL);
-	}
-	i = 0;
-	if (s1)
-	{
-		while (s1[i])
-		{
-			dest[i] = s1[i];
-			i++;
-		}
-		free(s1);
-	}
-	while (*s2)
-		dest[i++] = *s2++;
-	return (dest[i] = '\0', dest);
-}
+#include "pipex_basic.h"
 
 static void	get_paths(t_p *p, char **env)
 {
