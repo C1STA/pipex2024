@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 14:25:52 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/24 15:40:29 by wacista          ###   ########.fr       */
+/*   Created: 2024/10/25 06:14:51 by wacista           #+#    #+#             */
+/*   Updated: 2024/10/25 06:21:19 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_tab(char **arr)
+bool	init_forks(t_p *p, int ac, char **av, char **env)
 {
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
-
-void	free_pipex(t_p *p)
-{
-	free_tab(p->paths);
-	free_tab(p->cmd_args);
-	if (p->cmd_path)
-		free(p->cmd_path);
-	if (p)
-		free(p);
+	p->i = 0;
+	p->child = (pid_t *)malloc(sizeof(pid_t) * p->nb_cmds);
+	if (!p->child)
+		return (error_fork(p, av), 1);
+	while (p->i < p->nb_cmds)
+	{
+		p->child[p->i] = fork();
+		if (p->child[p->i] == -1)
+			return (error_fork(p, av), 1);
+		if (!p->child[p->i])
+			child_process(p, ac, av, env);
+		p->i++;
+	}
+	return (0);
 }
