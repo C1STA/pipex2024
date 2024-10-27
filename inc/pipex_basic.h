@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:53:35 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/26 17:51:11 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/27 10:29:10 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,8 @@ bool	isheredoc(t_p *p, char **av);
 
 void	close_unused_pipes(t_p *p);
 void	close_pipes_main(t_p *p);
+
+void	child_one(t_p *p, char **av, char **env);
+void	child_two(t_p *p, char **av, char **env);
 
 #endif

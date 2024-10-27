@@ -6,30 +6,11 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:43:29 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/26 16:15:50 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/27 10:10:13 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	error_return(t_p *p, char *prog, char *cmd, bool n)
-{
-	char	*tmp;
-
-	if (p->cmd_path || n)
-	{
-		tmp = ft_substr(prog, 2, ft_strlen(prog));
-		ft_printf("%s: %s: %s\n", tmp, cmd, strerror(errno));
-		if (tmp)
-			free(tmp);
-	}
-	else
-		ft_printf("%s: command not found\n", cmd);
-	free_pipe(p);
-	if (!n)
-		exit(127);
-	exit(EXIT_FAILURE);
-}
 
 void	error_pipes(t_p *p, char **av, int i, int n)
 {
@@ -66,7 +47,7 @@ void	error_heredoc(char **av, int n)
 
 	prog = ft_substr(av[0], 2, ft_strlen(av[0]));
 	if (!prog)
-		prog = "pipex";
+		prog = "pipex_bonus";
 	if (n == 1)
 	{
 		ft_printf("%s: warning: here-document not \
@@ -93,7 +74,7 @@ void	error_child(t_p *p, char *prog, char *cmd, int n)
 {
 	prog = ft_substr(prog, 2, ft_strlen(prog));
 	if (!prog)
-		prog = "pipex";
+		prog = "pipex_bonus";
 	if (p->cmd_path || n)
 		ft_printf("%s: %s: %s\n", prog, cmd, strerror(errno));
 	else
@@ -114,7 +95,7 @@ void	error_fork(t_p *p, char **av)
 
 	prog = ft_substr(av[0], 2, ft_strlen(av[0]));
 	if (!prog)
-		prog = "pipex";
+		prog = "pipex_bonus";
 	ft_printf("%s: %s\n", prog, strerror(errno));
 	if (p->isheredoc)
 		if (unlink("/tmp/.pipex_heredoc") == -1)

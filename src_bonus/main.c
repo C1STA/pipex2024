@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 01:11:21 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/26 16:27:06 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/27 10:13:13 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ int	main(int ac, char **av, char **env)
 	int	status;
 
 	if (ac < 5)
-		return (ft_printf("pipex: accepts 4+ args, received %d\n", ac - 1), 2);
+		return (ft_printf("pipex_bonus: accepts 4+ args, \
+received %d\n", ac - 1), 2);
 	status = 0;
 	if (ac > 4)
 	{
 		p = (t_p *)malloc(sizeof(t_p));
 		if (!p)
-			return (ft_printf("pipex: %s\n", strerror(errno)), 1);
+			return (ft_printf("pipex_bonus: %s\n", strerror(errno)), 1);
 		if (init_pipes(p, ac, av))
 			return (1);
 		if (init_forks(p, ac, av, env))

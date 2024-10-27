@@ -7,28 +7,37 @@ WHITE	=\033[0;37m
 CC		= cc
 RM		= rm -rf
 NAME	= pipex
+NAME_BONUS	= pipex_bonus
 INC		= -I inc/ -I lib/libft/
 LIBFT	= -L lib/libft -lft
 CFLAGS	= -Wall -Wextra -Werror
 
-SRCPATH	= src_bonus/
+SRCPATH	= src/
 SRC	=	main.c \
-		pipe.c \
+		data.c \
 		free.c \
 		error.c \
-		ft_split_args.c \
 		child.c \
-		data.c \
-		fork.c \
-		heredoc.c
+		ft_split_args.c
+
+SRC_BONUS_PATH = src_bonus/
+SRC_BONUS = main.c \
+						pipe.c \
+						free.c \
+						error.c \
+						ft_split_args.c \
+						child.c \
+						data.c \
+						fork.c \
+						heredoc.c
+
+all: $(NAME)
 
 OBJDIR	= .config/obj/
 OBJ		= $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
 DEPDIR	= .config/dep/
 DEP		= $(addprefix $(DEPDIR), $(SRC:.c=.d))
-
-all: $(NAME)
 
 $(NAME): $(OBJ)
 		@echo "$(CYAN)Linking $(NAME)...$(WHITE)"
@@ -46,6 +55,30 @@ $(DEPDIR)%.d: $(SRCPATH)%.c
 
 -include $(DEP)
 
+bonus: $(NAME_BONUS)
+
+OBJDIR_BONUS	= .config/obj_bonus/
+OBJ_BONUS		= $(addprefix $(OBJDIR_BONUS), $(SRC_BONUS:.c=.o))
+
+DEPDIR_BONUS	= .config/dep_bonus/
+DEP_BONUS		= $(addprefix $(DEPDIR_BONUS), $(SRC_BONUS:.c=.d))
+
+$(NAME_BONUS): $(OBJ_BONUS)
+	@echo "$(CYAN)Linking $(NAME_BONUS)...$(WHITE)"
+	@$(MAKE) --no-print-directory -C lib/libft
+	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT) -o $(NAME_BONUS)
+	@echo "$(GREEN)Done$(WHITE)"
+
+$(OBJDIR_BONUS)%.o: $(SRC_BONUS_PATH)%.c
+		@mkdir -p $(@D)
+		@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+
+$(DEPDIR_BONUS)%.d: $(SRC_BONUS_PATH)%.c
+		@mkdir -p $(@D)
+		@$(CC) $(CFLAGS) $(INC) -MM $< -MT $(@:d=.o) -MF $@ -MP
+
+-include $(DEP_BONUS)
+
 clean:
 		@echo "$(RED)Cleaning $(NAME)...$(WHITE)"
 		@$(MAKE) --no-print-directory fclean -C lib/libft
@@ -53,13 +86,12 @@ clean:
 		@echo "$(GREEN)Done$(WHITE)"
 
 fclean: clean
-		@$(RM) $(NAME)
+		@$(RM) $(NAME) $(NAME_BONUS)
 
 re: fclean all
 
 norm:
 	@echo "$(YELLOW)Executing norminette...$(WHITE)"
-	@norminette inc/*
-	@norminette src/*
+	@norminette
 
-.PHONY: all clean fclean re norm
+.PHONY: all bonus clean fclean re norm
