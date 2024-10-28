@@ -6,7 +6,7 @@
 /*   By: wacista <wacista@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 06:15:59 by wacista           #+#    #+#             */
-/*   Updated: 2024/10/26 16:14:34 by wacista          ###   ########.fr       */
+/*   Updated: 2024/10/28 15:29:37 by wacista          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ void	out_child(t_p *p, int ac, char **av)
 	int	outfile;
 
 	if (p->i != p->nb_cmds - 1)
-	{
 		dup2(p->fd[p->i][1], STDOUT_FILENO);
-		close(p->fd[p->i][1]);
-	}
 	else
 	{
 		if (p->isheredoc == 1)
